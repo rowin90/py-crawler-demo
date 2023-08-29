@@ -1,21 +1,5 @@
-# class Res():
-#     def __init__(self):
-#         self.age = 1
-#
-#
-# a = Res()
-# a.name = 3
-# print(a.name)
-
-
-# import pickle
-#
-# a = pickle.dumps('a')
-# print(a)
-# b = pickle.loads(a)
-# print(b)
-
-
+# 持久化队列
+```python
 from redis_tools import get_redis_queue_cls
 
 Queue = get_redis_queue_cls('priority')
@@ -30,3 +14,4 @@ PRIORITY_REDIS_QUEUE_CONFIG = {
 pqueue = Queue(**PRIORITY_REDIS_QUEUE_CONFIG)
 pqueue.put((100, 'value100'))
 print(pqueue.get())
+```

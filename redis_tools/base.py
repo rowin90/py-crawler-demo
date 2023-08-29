@@ -23,7 +23,7 @@ class BaseRedisQueue(object):
     max_timeout = 0.3
 
     def __init__(self, name, host='localhost', port=6379, db=0,
-                 maxsize=0, lazy_limit=True, password=None, cluster_nodes=None):
+                 maxsize=0, lazy_limit=True, password=None, cluster_nodes=None,redis_lock_config = {},use_lock=False):
         """
         Constructor for RedisQueue
 
@@ -41,6 +41,11 @@ class BaseRedisQueue(object):
         self.maxsize = maxsize
         self.lazy_limit = lazy_limit
         self.last_qsize = 0
+
+        self.redis_lock_config = redis_lock_config
+        self.lock = None
+
+        self.use_lock = use_lock
 
     def qsize(self):
         self.last_qsize = self.redis.llen(self.name)
