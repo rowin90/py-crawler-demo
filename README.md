@@ -91,6 +91,7 @@ print(pqueue.get())
             print('解锁失败')
             return False
 ```
+- 执行 request_manager/utils/redis_tools/redis_lock.py
 ```python
 # 测试
 if __name__ == '__main__':
