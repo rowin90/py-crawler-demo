@@ -33,6 +33,17 @@ class RedisLock(object):
             time.sleep(0.01)
 
 
+        # 如果 lock_name 存在，ret == 0 否则 ret==1
+        ret = self.redis.setnx(self.lock_name, pickle.dumps(thread_id))
+        if ret == 1:
+            self.redis.expire(self.lock_name, expire)
+            print('上锁成功')
+            return True
+        else:
+            print('上锁失败')
+            return True
+
+
     def release_lock(self, thread_id=None):
         if thread_id is None:
             thread_id = self._get_thread_id()
@@ -51,6 +62,6 @@ class RedisLock(object):
 if __name__ == '__main__':
     redis_lock = RedisLock('redis_lock')
 
-    if redis_lock.acquire_lock():
+    if redis_lock.acquire_lock(expire=2):
         print('执行对应的操作')
-        redis_lock.release_lock()
+        # redis_lock.release_lock()  # 加锁后不解锁试试
