@@ -101,3 +101,5 @@ if __name__ == '__main__':
         print('执行对应的操作')
         # redis_lock.release_lock()  # 加锁后不解锁试试
 ```
+# kafka
+1. 启动 kafka，依赖 zookeeper 构建集群环境
