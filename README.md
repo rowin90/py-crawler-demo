@@ -8,7 +8,7 @@
         3. 优先级队列，用 Sorted Set 有序集合，zadd ，zrang ，zrem
 
 ```python
-from request_manager.utils.redis_tools import get_redis_queue_cls
+from demo.request_manager.utils.redis_tools import get_redis_queue_cls
 
 Queue = get_redis_queue_cls('priority')
 PRIORITY_REDIS_QUEUE_CONFIG = {

@@ -28,7 +28,7 @@ class RequestScheduler(object):
         pass
 
     def add_request(self, request_obj, queue_name, filter_name=None):
-        """对请求去重，并将费重复的请求对象添加到指定请求队列中"""
+        """对请求去重，并将非重复的请求对象添加到指定请求队列中"""
         pass
 
     def get_request(self, queue_name, block=True):
