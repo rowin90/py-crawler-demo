@@ -1,6 +1,8 @@
-class RequestScheduler(object):
+import logging
+from spiderSystem.request_manager.utils.redis_tools import get_redis_queue_cls
+class RequestManager(object):
 
-    def __int__(self,
+    def __init__(self,
                 queue_type="fifo",
                 filter_type="redis",
                 queue_kwargs={},
@@ -15,11 +17,13 @@ class RequestScheduler(object):
         self._set_filter_cls(filter_type)
         self._set_queue_cls(queue_type)
 
+
     def _set_filter_cls(self, filter_type):
         pass
 
     def _set_queue_cls(self, queue_type):
-        pass
+        FIFO_QUEUE = get_redis_queue_cls(queue_type)
+        self.filter_queue = FIFO_QUEUE("filter_manager_queue", host="localhost")
 
     def _get_request_filter(self, filter_name):
         pass
@@ -29,7 +33,14 @@ class RequestScheduler(object):
 
     def add_request(self, request_obj, queue_name, filter_name=None):
         """对请求去重，并将非重复的请求对象添加到指定请求队列中"""
+        request = request_obj
+        self.filter_queue.put(request)
+
+        print(request)
+        print('请求添加成功: <%s>' % request.url)
         pass
 
     def get_request(self, queue_name, block=True):
-        pass
+        """从指定队列中获取请求对象"""
+        request = self.filter_queue.get_nowait()
+        return request

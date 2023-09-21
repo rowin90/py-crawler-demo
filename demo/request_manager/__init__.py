@@ -1,6 +1,6 @@
 class RequestScheduler(object):
 
-    def __int__(self,
+    def __init__(self,
                 queue_type="fifo",
                 filter_type="redis",
                 queue_kwargs={},

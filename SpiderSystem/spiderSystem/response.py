@@ -8,7 +8,7 @@ from pyquery import PyQuery
 class Response(object):
     """响应对象"""
 
-    def __int__(self, request, status_code, url, headers, body):
+    def __init__(self, request, status_code, url, headers, body):
         self.request = request
         self.status_code = status_code
         self.url = url

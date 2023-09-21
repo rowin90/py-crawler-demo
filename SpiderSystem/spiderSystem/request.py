@@ -18,7 +18,7 @@ class Request(object):
         self.name = name # 当前请求属于哪个爬虫
 
     @property
-    def url_with_query(self):
+    def with_query_url(self):
         """
         把字典的请求参数与url地址里的请求参数进行整合
         """
