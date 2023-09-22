@@ -22,6 +22,7 @@ class RequestManager(object):
         pass
 
     def _set_queue_cls(self, queue_type):
+        """设置请求队列使用的 类对象"""
         FIFO_QUEUE = get_redis_queue_cls(queue_type)
         self.filter_queue = FIFO_QUEUE("filter_manager_queue", host="localhost")
 
@@ -42,5 +43,5 @@ class RequestManager(object):
 
     def get_request(self, queue_name, block=True):
         """从指定队列中获取请求对象"""
-        request = self.filter_queue.get_nowait()
+        request = self.filter_queue.get(block=True)
         return request

@@ -45,29 +45,23 @@ class Slave(object):
         self.spiders = spiders
 
     def run(self):
-        # 1. 获取一个请求
-        request = self.request_manager.get_request(PROJECT_NAME)
-        print('111111',request)
-        print('222',request.name)
-        print('333',request.body)
+        while True:
+            # 1. 获取一个请求
+            request = self.request_manager.get_request(PROJECT_NAME)
 
-        # 2. 发起请求
-        response = self.downloader.fetch(request)
+            # 2. 发起请求
+            response = self.downloader.fetch(request)
 
-        print('4444',response)
+            # 3. 获取爬虫对象
+            spider = self.spiders[request.name]()
 
-        # 3. 获取爬虫对象
-        spider = self.spiders[request.name]()
-
-        # 4. 处理 response
-        for result in spider.parse(response):
-
-            if result is None:
-                raise Exception('不允许返回None')
-            elif isinstance(result, Request):
-                self.filter_queue.put(result)
-
-            else:
-                # 意味着是一个数据
-                new_result = spider.data_clean(result)
-                spider.data_save(new_result)
+            # 4. 处理 response
+            for result in spider.parse(response):
+                if result is None:
+                    raise Exception('不允许返回None')
+                elif isinstance(result, Request):
+                    self.filter_queue.put(result)
+                else:
+                    # 意味着是一个数据
+                    new_result = spider.data_clean(result)
+                    spider.data_save(new_result)

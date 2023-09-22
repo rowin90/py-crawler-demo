@@ -8,11 +8,12 @@ class BaiduSpider(BaseSpider):
 
     def start_requests(self):
         """生成器"""
-        yield Request("http://www.baidu.com/1", name=self.name)
-        yield Request("http://www.baidu.com/2", name=self.name)
-        yield Request("http://www.baidu.com/3", name=self.name)
-        yield Request("http://www.baidu.com/4", name=self.name)
-        yield Request("http://www.baidu.com/5", name=self.name)
+        yield Request("http://www.baidu.com/s?wd=python", name=self.name)
+        yield Request("http://www.baidu.com/s?wd=python1", name=self.name)
+        yield Request("http://www.baidu.com/s?wd=python2", name=self.name)
+        yield Request("http://www.baidu.com/s?wd=python3", name=self.name)
+        yield Request("http://www.baidu.com/s?wd=python4", name=self.name)
+        yield Request("http://www.baidu.com/s?wd=python5", name=self.name)
 
     def parse(self, response):
         """生成器"""
@@ -29,5 +30,5 @@ class BaiduSpider(BaseSpider):
 
 if __name__ == '__main__':
     spiders = {BaiduSpider.name: BaiduSpider}
-    # Master(spiders).run()
-    Slave(spiders).run()
+    Master(spiders).run()
+    # Slave(spiders).run()
