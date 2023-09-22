@@ -4,23 +4,18 @@ from .downloader import RequestsDownloader
 
 from .request import Request
 
-REQUEST_MANAGER_CONFIG = {
-    "queue_type": "fifo",
-    "queue_kwargs": {"host": "localhost", "port": 6379},
-    "filter_type": "redis",  # 过滤器类型，基于redis的过滤器
-    "filter_kwargs": {"redis_key": "redis_filter", "redis_host": "localhost"}
-}
 
-PROJECT_NAME = 'baidu'
+
 FIFO_QUEUE = get_redis_queue_cls('fifo')
 
 
 class Master(object):
 
-    def __init__(self, spiders):
+    def __init__(self, spiders,project_name,request_manager_config):
         self.filter_queue = FIFO_QUEUE("filter_queue", host="localhost")  # 请求过滤队列
-        self.request_manager = RequestManager(**REQUEST_MANAGER_CONFIG)  # 请求管理对象
+        self.request_manager = RequestManager(**request_manager_config)  # 请求管理对象
         self.spiders = spiders
+        self.project_name = project_name
 
     def run_start_requests(self):
         for spider in self.spiders.values():
@@ -30,7 +25,7 @@ class Master(object):
     def run_filter_queue(self):
         while True:
             request = self.filter_queue.get()
-            self.request_manager.add_request(request, PROJECT_NAME)
+            self.request_manager.add_request(request, self.project_name)
 
     def run(self):
         self.run_start_requests()
@@ -38,16 +33,17 @@ class Master(object):
 
 
 class Slave(object):
-    def __init__(self, spiders):
+    def __init__(self, spiders,project_name,request_manager_config):
         self.filter_queue = FIFO_QUEUE("filter_queue", host="localhost")
-        self.request_manager = RequestManager(**REQUEST_MANAGER_CONFIG)  # 请求管理对象
+        self.request_manager = RequestManager(**request_manager_config)  # 请求管理对象
         self.downloader = RequestsDownloader()
         self.spiders = spiders
+        self.project_name = project_name
 
     def run(self):
         while True:
             # 1. 获取一个请求
-            request = self.request_manager.get_request(PROJECT_NAME)
+            request = self.request_manager.get_request(self.project_name)
 
             # 2. 发起请求
             response = self.downloader.fetch(request)

@@ -34,6 +34,8 @@ class RequestManager(object):
 
     def add_request(self, request_obj, queue_name, filter_name=None):
         """对请求去重，并将非重复的请求对象添加到指定请求队列中"""
+
+        # todo 目前所有的队列，都是放在 'filter_manager_queue' 中，理论上应该按照 queue_name = baidu 来放在对应队列中
         request = request_obj
         self.filter_queue.put(request)
 
@@ -43,5 +45,7 @@ class RequestManager(object):
 
     def get_request(self, queue_name, block=True):
         """从指定队列中获取请求对象"""
+
+        # todo 取值也应该按照队列名称，queue_name 来拉取对应的数据，现在只有一个队列 'filter_manager_queue'
         request = self.filter_queue.get(block=True)
         return request
