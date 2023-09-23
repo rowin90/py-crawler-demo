@@ -1,5 +1,6 @@
 import asyncio
 import tornado.ioloop
+import threading
 
 from .request_manager import RequestManager
 from .request_manager.utils.redis_tools import get_redis_queue_cls
@@ -29,8 +30,11 @@ class Master(object):
             self.request_manager.add_request(request, self.project_name)
 
     def run(self):
-        self.run_start_requests()
-        self.run_filter_queue()
+        # self.run_start_requests()
+        # self.run_filter_queue()
+        # 两个线程去做
+        threading.Thread(target=self.run_start_requests).start()
+        threading.Thread(target=self.run_filter_queue).start()
 
 
 class Slave(object):
@@ -60,7 +64,7 @@ class Slave(object):
             if result is None:
                 raise Exception('不允许返回None')
             elif isinstance(result, Request):
-                self.filter_queue.put(result)
+                await io_loop.run_in_executor(None, self.filter_queue.put,result)
             else:
                 # 意味着是一个数据
                 new_result = spider.data_clean(result)
