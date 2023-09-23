@@ -1,3 +1,6 @@
+# 环境
+1. 启动 redis。队列用的是 redis 队列
+
 # Master 和 Slave
 1. master 是用来处理请求，过滤的
 2. slave 是用来下载，转化的
