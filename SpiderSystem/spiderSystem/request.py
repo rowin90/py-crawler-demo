@@ -2,7 +2,7 @@
 import urllib.parse
 
 class Request(object):
-    def __init__(self, url, method='GET', query={}, body={},name="request",headers=None):
+    def __init__(self, url, method='GET', query={}, body={},name="request",headers=None,id=None):
         self.url = url
         self.method = method
 
@@ -16,6 +16,8 @@ class Request(object):
         self.headers = headers
 
         self.name = name # 当前请求属于哪个爬虫
+
+        self.id = id  # 指纹
 
     @property
     def with_query_url(self):

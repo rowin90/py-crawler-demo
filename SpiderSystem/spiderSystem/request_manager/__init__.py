@@ -1,4 +1,4 @@
-import logging
+import uuid
 from spiderSystem.request_manager.utils.redis_tools import get_redis_queue_cls
 class RequestManager(object):
 
@@ -37,6 +37,11 @@ class RequestManager(object):
 
         # todo 目前所有的队列，都是放在 'filter_manager_queue' 中，理论上应该按照 queue_name = baidu 来放在对应队列中
         request = request_obj
+
+        # # 标记唯一标示
+        time_based_uuid = uuid.uuid4()
+        request.id = str(time_based_uuid)
+
         self.filter_queue.put(request)
 
         print(request)

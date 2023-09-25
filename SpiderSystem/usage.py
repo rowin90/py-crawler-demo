@@ -40,11 +40,11 @@ class BaiduSpider(BaseSpider):
 
 if __name__ == '__main__':
     spiders = {BaiduSpider.name: BaiduSpider}
-    Master(spiders, project_name=PROJECT_NAME, request_manager_config=REQUEST_MANAGER_CONFIG).run()
+    # Master(spiders, project_name=PROJECT_NAME, request_manager_config=REQUEST_MANAGER_CONFIG).run()
 
     # 同步请求，用 requests 发请求
-    # Slave(spiders, project_name=PROJECT_NAME, request_manager_config=REQUEST_MANAGER_CONFIG).run()
-
-    # slave = Slave(spiders, project_name=PROJECT_NAME, request_manager_config=REQUEST_MANAGER_CONFIG)
-    # io_loop = tornado.ioloop.IOLoop.current()
-    # io_loop.run_sync(slave.run)
+    # # Slave(spiders, project_name=PROJECT_NAME, request_manager_config=REQUEST_MANAGER_CONFIG).run()
+    #
+    slave = Slave(spiders, project_name=PROJECT_NAME, request_manager_config=REQUEST_MANAGER_CONFIG)
+    io_loop = tornado.ioloop.IOLoop.current()
+    io_loop.run_sync(slave.run)
