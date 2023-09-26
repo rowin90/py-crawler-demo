@@ -1,4 +1,6 @@
 import asyncio
+import logging
+
 import tornado.ioloop
 import threading
 import json
@@ -107,6 +109,7 @@ class Slave(object):
                     new_result = spider.data_clean(result)
                     spider.data_save(new_result)
         except Exception as e:
+            logging.error(e)
             # 失败请求后
             self.request_watcher.mark_fail_requests(request, str(e))
             raise
