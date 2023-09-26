@@ -22,3 +22,33 @@ if __name__ == '__main__':
     # io_loop.run_sync(slave.run)
 
 ```
+
+# 模块安装成内置环境中
+1. 在模块目录添加 setup.py 脚本
+```txt
+├── setup.py
+├── spiderSystem
+├── README.md
+
+```
+2. 执行 pip3 setup.py install 即可
+3. 查看包信息 pip3 show spiderSystem
+```python
+from setuptools import setup, find_packages
+
+setup(
+    name="spiderSystem",
+    version="0.1",
+    description="spiderSystem module",
+    author='raoju',
+    url="url",
+    license="license",
+    packages=find_packages(exclude=[]), # 当前所有模块都安装
+    install_requires=[
+        "tornado >= 5.1",
+        "pycurl",
+    ]
+
+)
+
+```
