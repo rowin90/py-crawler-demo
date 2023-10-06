@@ -103,3 +103,6 @@ if __name__ == '__main__':
 ```
 # kafka
 1. 启动 kafka，依赖 zookeeper 构建集群环境
+
+# 部署ELK
+[docker部署ELK](https://juejin.cn/post/7207707287045701691)

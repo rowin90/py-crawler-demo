@@ -1,0 +1,15 @@
+2023-09-28 10:36:35  [process: 55664:][thread: 140704364660480] DEBUG  log.py [line:33] DEBUG hello
+2023-09-28 10:36:35  [process: 55664:][thread: 140704364660480] INFO  log.py [line:34] INFO info
+2023-09-28 10:36:35  [process: 55664:][thread: 140704364660480] WARNING  log.py [line:35] WARNING warning
+2023-09-28 10:36:36  [process: 55664:][thread: 140704364660480] DEBUG  log.py [line:33] DEBUG hello
+2023-09-28 10:36:36  [process: 55664:][thread: 140704364660480] INFO  log.py [line:34] INFO info
+2023-09-28 10:36:36  [process: 55664:][thread: 140704364660480] WARNING  log.py [line:35] WARNING warning
+2023-09-28 10:36:37  [process: 55664:][thread: 140704364660480] DEBUG  log.py [line:33] DEBUG hello
+2023-09-28 10:36:37  [process: 55664:][thread: 140704364660480] INFO  log.py [line:34] INFO info
+2023-09-28 10:36:37  [process: 55664:][thread: 140704364660480] WARNING  log.py [line:35] WARNING warning
+2023-09-28 10:36:38  [process: 55664:][thread: 140704364660480] DEBUG  log.py [line:33] DEBUG hello
+2023-09-28 10:36:38  [process: 55664:][thread: 140704364660480] INFO  log.py [line:34] INFO info
+2023-09-28 10:36:38  [process: 55664:][thread: 140704364660480] WARNING  log.py [line:35] WARNING warning
+2023-09-28 10:36:39  [process: 55664:][thread: 140704364660480] DEBUG  log.py [line:33] DEBUG hello
+2023-09-28 10:36:39  [process: 55664:][thread: 140704364660480] INFO  log.py [line:34] INFO info
+2023-09-28 10:36:39  [process: 55664:][thread: 140704364660480] WARNING  log.py [line:35] WARNING warning

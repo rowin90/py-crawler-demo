@@ -1,0 +1,60 @@
+version: "3"
+services:
+  es:
+   image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+   labels:
+    co.elastic.logs/enabled: "false"
+   hostname: docker-es
+   ports:
+   - "9200:9200"
+   - "9300:9300"
+   environment:
+   - discovery.type=single-node
+   - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+   - ELASTIC_PASSWORD=elastic
+   - KIBANA_PASSWORD=elastic
+   volumes:
+   - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+   - ./data/elasticsearch:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.4.3
+    labels:
+      co.elastic.logs/enabled: "false"
+    hostname: docker-kibana
+    ports:
+     - "5601:5601"
+    volumes:
+     - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    depends_on:
+     - es
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.4.3
+    hostname: docker-logstash
+    labels:
+      co.elastic.logs/enabled: "false"
+    ports:
+     - "5044:5044"
+     - "9600:9600"
+    volumes:
+     - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+     - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+     - ./data/logs:/logs
+    environment:
+     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+     - "LS_OPTS=--config.reload.automatic"
+    depends_on:
+     - es
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.4.3
+    labels:
+      co.elastic.logs/enabled: "false"
+    user: root
+    hostname: docker-filebeat
+    volumes:
+     - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+     - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+     - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    depends_on:
+     - es

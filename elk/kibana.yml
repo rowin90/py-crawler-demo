@@ -1,0 +1,12 @@
+server:
+  host: "0.0.0.0"
+  port: 5601
+
+# ES
+elasticsearch:
+  hosts: ["http://docker-es:9200"]
+  username: "kibana_system"
+  password: "elastic"
+
+# 汉化
+i18n.locale: "zh-CN"
