@@ -106,3 +106,4 @@ if __name__ == '__main__':
 
 # 部署ELK
 [docker部署ELK](https://juejin.cn/post/7207707287045701691)
+1. 直接在 /elk文件夹中，执行 docker-compose 即可
